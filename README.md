@@ -1,11 +1,11 @@
 # LLM Evaluation Pipeline (AI Auditor)
 
-## 📌 Project Overview
+##  Project Overview
 This repository contains a robust, production-ready evaluation pipeline designed to audit AI-User interactions in real-time. It acts as an automated "Judge" that assesses AI responses against a retrieved Context (RAG) for **Hallucination**, **Relevance**, and **Completeness**, while also tracking quantitative metrics like **Latency** and **Cost**.
 
 The pipeline is built to be resilient, capable of recovering from corrupted log files and handling external API failures gracefully.
 
-## ✨ Key Features
+##  Key Features
 * **"Nuclear" Data Cleaning:** A multi-phase recovery system using Regex to extract valid chat/context data even from broken or malformed JSON files.
 * **Real-Time LLM Auditing:** Uses Google Gemini (Flash/Pro) to score qualitative metrics on a 1-5 scale.
 * **Metric Tracking:** Automatically calculates response latency and estimated token costs.
@@ -13,7 +13,7 @@ The pipeline is built to be resilient, capable of recovering from corrupted log 
 
 ---
 
-## 🛠️ Local Setup Instructions
+##  Local Setup Instructions
 
 1.  **Clone the Repository:**
     ```bash
@@ -42,7 +42,7 @@ The pipeline is built to be resilient, capable of recovering from corrupted log 
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 The pipeline follows a **"Fail-Safe RAG Evaluation"** architecture designed for high reliability.
 
@@ -62,7 +62,7 @@ The pipeline follows a **"Fail-Safe RAG Evaluation"** architecture designed for 
 
 ---
 
-## 🧠 Design Decisions: "Why this way?"
+##  Design Decisions: "Why this way?"
 
 ### 1. Why Regex for Data Cleaning?
 Standard `json.loads()` is brittle. In real-world logging, files often get truncated, contain invalid escape characters, or mix Python/JSON syntax. A standard parser would crash the pipeline. My "Nuclear Cleaner" approach ensures the pipeline **always** has data to evaluate, essentially "resurrecting" logs that would otherwise be discarded.
@@ -77,7 +77,7 @@ Instead of making separate API calls for "Relevance" and "Hallucination," I comb
 
 ---
 
-## 🚀 Scaling Strategy (Millions of Conversations)
+##  Scaling Strategy (Millions of Conversations)
 
 If running this script at scale (e.g., millions of daily conversations), the following optimizations ensure cost and latency remain minimal:
 
@@ -97,8 +97,8 @@ If running this script at scale (e.g., millions of daily conversations), the fol
     * Replace the large, expensive "Generalist Judge" (e.g., Gemini Pro/GPT-4) with a **fine-tuned Small Language Model (SLM)** like Llama-3-8B or Gemini Nano.
     * Fine-tuning a small model specifically for "Hallucination Detection" can achieve similar accuracy at **1/10th the cost**.
 
-## 📊 Sample Output (final_report.json)
-
+##  Sample Output (final_report.json)
+https://colab.research.google.com/drive/19gYoZFgCc7jm8DrNrBUIvpxspVS25CYR?usp=sharing
 ```json
 {
     "evaluation_id": "eval_auto_001",
@@ -114,4 +114,5 @@ If running this script at scale (e.g., millions of daily conversations), the fol
         "cost_usd": 0.00021
     }
 }
-https://colab.research.google.com/drive/19gYoZFgCc7jm8DrNrBUIvpxspVS25CYR?usp=sharing
+
+
